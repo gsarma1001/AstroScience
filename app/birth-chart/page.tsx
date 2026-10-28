@@ -1,5 +1,6 @@
 import { Header, Footer } from "@/components/site-chrome";
 import { BirthDetailsForm } from "@/components/birth-details-form";
+import { VedicChartViewer } from "@/components/vedic-chart/vedic-chart-viewer";
 
 export const metadata = {
   title: "Birth details — Nakshatra AI",
@@ -26,6 +27,11 @@ export default function BirthChartPage() {
           <BirthDetailsForm />
         </div>
       </main>
+      <section className="chart-preview-section">
+        <div className="page-container">
+          <VedicChartViewer chart={null} />
+        </div>
+      </section>
       <Footer />
     </>
   );

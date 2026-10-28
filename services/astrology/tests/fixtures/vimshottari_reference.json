@@ -1,0 +1,53 @@
+{
+  "reference": "Independently computed Vimshottari table using the JPL DE441 Moon longitude reference fixture and documented proportional-period rules",
+  "birth_timestamp": "2000-01-01T12:00:00Z",
+  "moon_sidereal_longitude": 199.46182413,
+  "birth_nakshatra": "Swati",
+  "nakshatra_lord": "Rahu",
+  "year_length_days": 365.25,
+  "elapsed_nakshatra_fraction": 0.95963680975,
+  "balance_at_birth_years": 0.7265374245,
+  "sequence_starts_at": "1982-09-23T08:49:37.427402Z",
+  "mahadasha_planets": [
+    "Rahu",
+    "Jupiter",
+    "Saturn",
+    "Mercury",
+    "Ketu",
+    "Venus",
+    "Sun",
+    "Moon",
+    "Mars"
+  ],
+  "first_mahadasha_ends_at": "2000-09-22T20:49:37.427402Z",
+  "first_mahadasha_antardasha_planets": [
+    "Rahu",
+    "Jupiter",
+    "Saturn",
+    "Mercury",
+    "Ketu",
+    "Venus",
+    "Sun",
+    "Moon",
+    "Mars"
+  ],
+  "first_antardasha_ends_at": "1985-06-05T13:01:37.427402Z",
+  "active_at_birth": [
+    "Rahu",
+    "Mars",
+    "Jupiter",
+    "Moon"
+  ],
+  "active_at_birth_period_starts": [
+    "1982-09-23T08:49:37.427402Z",
+    "1999-09-05T08:31:37.427402Z",
+    "1999-11-24T06:05:22.427402Z",
+    "1999-12-30T11:23:04.427402Z"
+  ],
+  "active_at_birth_period_ends": [
+    "2000-09-22T20:49:37.427402Z",
+    "2000-09-22T20:49:37.427402Z",
+    "2000-01-14T09:19:46.427402Z",
+    "2000-01-03T17:39:16.427402Z"
+  ]
+}

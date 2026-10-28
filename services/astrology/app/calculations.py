@@ -13,6 +13,7 @@ from app.schemas import (
     Ayanamsa,
     ChartHouse,
     ChartProvenance,
+    ChartPlacement,
     ChartRequest,
     ChartResponse,
     DivisionChart,
@@ -186,10 +187,28 @@ def _make_division_chart(
     _, asc_sign_index, asc_degree = _longitude_sign(ascendant_longitude)
     varga_asc_sign_index = _varga_sign(asc_sign_index, asc_degree, division)
     occupants: list[list[str]] = [[] for _ in SIGNS]
+    placements = [
+        ChartPlacement(
+            name="Ascendant",
+            sign=SIGNS[varga_asc_sign_index],
+            house=1,
+            degree_in_sign=(asc_degree % (30.0 / division)) * division,
+        )
+    ]
     occupants[varga_asc_sign_index].append("Ascendant")
     for name, longitude in positions.items():
         _, sign_index, degree = _longitude_sign(longitude)
-        occupants[_varga_sign(sign_index, degree, division)].append(name.title())
+        varga_sign_index = _varga_sign(sign_index, degree, division)
+        house = (varga_sign_index - varga_asc_sign_index) % 12 + 1
+        occupants[varga_sign_index].append(name.title())
+        placements.append(
+            ChartPlacement(
+                name=name.title(),
+                sign=SIGNS[varga_sign_index],
+                house=house,
+                degree_in_sign=(degree % (30.0 / division)) * division,
+            )
+        )
 
     houses = []
     for house_number in range(1, 13):
@@ -205,6 +224,7 @@ def _make_division_chart(
         division=division_name,
         ascendant_sign=SIGNS[varga_asc_sign_index],
         houses=houses,
+        placements=placements,
     )
 
 
@@ -330,6 +350,23 @@ def calculate_chart(request: ChartRequest) -> ChartResponse:
                     occupants=d1_occupants[(asc_sign_index + house_number - 1) % 12],
                 )
                 for house_number in range(1, 13)
+            ],
+            placements=[
+                ChartPlacement(
+                    name="Ascendant",
+                    sign=asc_sign,
+                    house=1,
+                    degree_in_sign=_longitude_sign(ascendant_longitude)[2],
+                ),
+                *[
+                    ChartPlacement(
+                        name=position.name,
+                        sign=position.zodiac_sign,
+                        house=position.house,
+                        degree_in_sign=position.degree_in_sign,
+                    )
+                    for position in positions.values()
+                ],
             ],
         )
         d9 = _make_division_chart("D9 Navamsha", 9, ascendant_longitude, position_longitudes)

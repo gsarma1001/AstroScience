@@ -30,6 +30,18 @@ uvicorn app.main:app --reload
 
 The endpoint is `POST /api/chart/calculate`; interactive OpenAPI documentation is available at `/docs`.
 
+Each D1/D9/D10 chart response includes a `placements` array. Every placement contains its name, divisional sign, whole-sign house, and degree within that divisional sign. These values are calculated by the ephemeris service so chart clients can render and label divisions without reconstructing planetary positions.
+
+The local frontend origin `http://localhost:3000` is permitted by default for browser requests to the API. Set `NAKSHATRA_CORS_ORIGINS` to a comma-separated origin allowlist in other environments; avoid wildcard origins when credentials or private chart data are involved.
+
+## Vimshottari Dasha
+
+`GET /api/chart/{chartId}/dashas` loads the persisted chart and calculates one complete 120-year Vimshottari cycle beginning at the start of the Moon's birth Nakshatra lord's Mahadasha. The response includes the Mahadasha, Antardasha, Pratyantardasha, and Sukshma periods, with parent identifiers and UTC start/end timestamps. The birth balance is computed from the unrounded Moon sidereal longitude within its 13°20′ Nakshatra. One Dasha year is defined as exactly 365.25 elapsed days (a Julian year); periods are durations on the UTC timeline rather than calendar-year anniversaries. This convention is included in each API response.
+
+The service returns period timing only. Planetary significance is a separate frontend interpretation layer and is not mixed into astronomical or Dasha calculations.
+
+To display a persisted chart's Dasha timeline in the local dashboard, open `http://localhost:3000/dashboard?chartId=CHART_ID`, replacing `CHART_ID` with the `chart_id` returned by `POST /api/chart/calculate`. For a deployed frontend, configure `NEXT_PUBLIC_ASTROLOGY_API_URL` to the API's base URL.
+
 ### Request
 
 ```json

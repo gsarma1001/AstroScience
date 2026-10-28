@@ -56,10 +56,18 @@ class ChartHouse(BaseModel):
     occupants: list[str]
 
 
+class ChartPlacement(BaseModel):
+    name: str
+    sign: str
+    house: int
+    degree_in_sign: float
+
+
 class DivisionChart(BaseModel):
     division: str
     ascendant_sign: str
     houses: list[ChartHouse]
+    placements: list[ChartPlacement]
 
 
 class ChartProvenance(BaseModel):

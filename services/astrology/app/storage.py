@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 from uuid import UUID
 
-from sqlalchemy import JSON, Date, Float, Integer, String, Uuid, create_engine
+from sqlalchemy import JSON, Float, String, Uuid, create_engine, select
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 
@@ -59,3 +59,11 @@ def persist_chart(request: ChartRequest, result: ChartResponse) -> None:
     )
     with SessionLocal.begin() as session:
         session.add(record)
+
+
+def get_stored_chart(chart_id: UUID) -> dict[str, Any] | None:
+    with SessionLocal() as session:
+        record = session.scalar(
+            select(CalculatedChart).where(CalculatedChart.chart_id == chart_id)
+        )
+        return record.result_json if record is not None else None

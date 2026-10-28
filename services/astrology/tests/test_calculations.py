@@ -121,6 +121,15 @@ def test_calculated_chart_structure_and_provenance() -> None:
     assert len(chart.d10_dashamsa.houses) == 12
     assert chart.lagna == chart.ascendant.zodiac_sign
     assert chart.moon_rashi == chart.planets["moon"].zodiac_sign
+    for division in (chart.d1_rashi_chart, chart.d9_navamsa, chart.d10_dashamsa):
+        assert len(division.placements) == 10
+        assert division.placements[0].name == "Ascendant"
+        assert division.placements[0].house == 1
+        assert division.placements[0].sign == division.ascendant_sign
+        for placement in division.placements:
+            assert 0.0 <= placement.degree_in_sign < 30.0
+            assert division.houses[placement.house - 1].sign == placement.sign
+            assert placement.name in division.houses[placement.house - 1].occupants
     assert (
         chart.planets["ketu"].sidereal_longitude
         == (chart.planets["rahu"].sidereal_longitude + 180.0) % 360.0
