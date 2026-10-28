@@ -22,7 +22,7 @@ export default function BirthChartPage() {
               <div className="form-step active"><span>01</span><div><strong>Birth details</strong><small>Tell us when and where</small></div></div>
               <div className="form-step"><span>02</span><div><strong>Your chart</strong><small>Calculation not available yet</small></div></div>
             </div>
-            <div className="form-privacy"><span aria-hidden="true">◇</span><p>Your details stay in this browser session only. Saving and chart calculations are not yet available.</p></div>
+            <div className="form-privacy"><span aria-hidden="true">◇</span><p>Place-search text is sent to Photon, which uses OpenStreetMap data, to find coordinates. Other birth details stay in this browser preview; saving and chart calculations are not yet available.</p></div>
           </div>
           <BirthDetailsForm />
         </div>
