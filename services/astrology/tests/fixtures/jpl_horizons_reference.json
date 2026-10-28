@@ -1,0 +1,35 @@
+{
+  "source": "NASA/JPL Horizons API, DE441 geocentric vector ephemerides",
+  "query_date_utc": "2000-01-01T12:00:00Z",
+  "center": "500@399 (Earth center)",
+  "reference_frame": "Ecliptic of J2000.0",
+  "correction": "Geometric Cartesian state vectors; no light-time or aberration corrections",
+  "conversion": "atan2(y, x) from published Horizons position vectors, then subtract published Lahiri ayanamsa 23.8571 degrees at J2000.0",
+  "tolerance_degrees": 0.03,
+  "query": {
+    "ephemeris_type": "VECTORS",
+    "time_type": "TDB",
+    "vector_correction": "NONE",
+    "center": "500@399",
+    "reference_plane": "ECLIPTIC",
+    "vector_table": 2
+  },
+  "geocentric_ecliptic_j2000_positions_au": {
+    "sun": [0.17713509927270979, -0.96724168676653055],
+    "moon": [-0.001949281649686695, -0.001838126040073046],
+    "mercury": [0.047041493897257557, -1.414529304901887],
+    "venus": [-0.54116719707267924, -0.99989599496633641],
+    "mars": [1.567851021019061, -0.98065800491754285],
+    "jupiter": [4.1783125348621359, 1.971334095703968],
+    "saturn": [6.5835455276513661, 5.6027467653440262]
+  },
+  "sidereal_longitudes": {
+    "sun": 256.520722768,
+    "moon": 199.461824130,
+    "mercury": 248.047622716,
+    "venus": 217.719607204,
+    "mars": 304.117782491,
+    "jupiter": 1.400908419,
+    "saturn": 16.541438013
+  }
+}
