@@ -16,6 +16,11 @@ from app.calculations import (
 )
 from app.dashas import calculate_vimshottari_sequence
 from app.dasha_schemas import DashaSequence
+from app.interpretation_schemas import (
+    ChartInterpretationRequest,
+    ChartInterpretationResponse,
+)
+from app.interpretations import interpret_chart
 from app.schemas import ChartRequest, ChartResponse
 from app.storage import create_schema, get_stored_chart, persist_chart
 
@@ -53,6 +58,23 @@ app.add_middleware(
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.post(
+    "/api/chart/interpretations",
+    response_model=ChartInterpretationResponse,
+)
+def get_chart_interpretations(
+    request: ChartInterpretationRequest,
+) -> ChartInterpretationResponse:
+    try:
+        return interpret_chart(
+            request.chart,
+            dashas=request.dashas,
+            as_of=request.as_of,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 @app.post(

@@ -107,6 +107,37 @@ def test_dasha_endpoint_reports_missing_chart(monkeypatch) -> None:
     assert response.json()["detail"] == "Calculated chart not found"
 
 
+def test_interpretation_endpoint_accepts_chart_json_without_recalculation(monkeypatch) -> None:
+    chart = calculate_chart(
+        ChartRequest(
+            birth_date="2000-01-01",
+            birth_time="12:00:00",
+            latitude=0,
+            longitude=0,
+            timezone="UTC",
+        )
+    )
+    monkeypatch.setattr(main, "create_schema", lambda: None)
+
+    with TestClient(main.app) as client:
+        response = client.post(
+            "/api/chart/interpretations",
+            json={
+                "chart": chart.model_dump(mode="json"),
+                "as_of": "2000-01-01T12:00:00Z",
+            },
+        )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["chart_id"] == str(chart.chart_id)
+    assert body["astronomical_facts"]["planets"]["moon"]["sidereal_longitude"] == (
+        chart.planets["moon"].sidereal_longitude
+    )
+    assert len(body["domains"]) == 9
+    assert body["active_dasha_rules"] == []
+
+
 def test_frontend_origin_can_read_dasha_api() -> None:
     with TestClient(main.app) as client:
         response = client.options(

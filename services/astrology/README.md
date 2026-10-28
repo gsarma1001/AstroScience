@@ -40,6 +40,16 @@ The local frontend origin `http://localhost:3000` is permitted by default for br
 
 The service returns period timing only. Planetary significance is a separate frontend interpretation layer and is not mixed into astronomical or Dasha calculations.
 
+## Jyotisha interpretations
+
+`POST /api/chart/interpretations` accepts a calculated `ChartResponse` JSON document, and optionally its matching Vimshottari sequence and an aware `as_of` timestamp. It does not recalculate or modify chart positions. The structured response keeps astronomical placements distinguishable from separately labeled traditional rule interpretations.
+
+Implemented D1 rule families include whole-sign house lords, sign dignity (own/exalted/debilitated), sign conjunctions, classical graha drishti (7th aspect for the seven visible planets, with Mars/Jupiter/Saturn special aspects), ascendant-dependent lordship indications, and conservative checks for Raja Yoga, Dhana Yoga, the five Pancha Mahapurusha Yogas, Gaja Kesari, Vipareeta Raja Yoga, and selected Neecha Bhanga conditions. Rahu/Ketu sign lordships, aspects, and dignity are not assumed because traditional schemes differ. The implementation reports factors and limitations rather than a single definitive benefic/malefic judgment.
+
+Nine life-domain modules return house-lord and karaka factors for personality, career, business, marriage, children, health, wealth, relocation, and spirituality. Business and relocation are explicitly labeled modern syntheses rather than single classical rules. Where a matching Dasha sequence is supplied, the active Mahadasha, Antardasha, and Pratyantardasha lords are interpreted using D1 lordships/placement and D9/D10 placement as corroborative context; an absent or out-of-range sequence yields no Dasha interpretation.
+
+Rule references name the relevant sections of *Brihat Parashara Hora Shastra* and, for yoga categories, *Phaladeepika*. Chapter numbering varies between editions, so no unsupported verse numbers or fabricated quotations are included. These are traditional symbolic interpretations, not empirically validated predictions. The service assigns no probabilities and does not make deterministic predictions about death, disease, relationship breakdown, or employment. Health output is not medical advice.
+
 To display a persisted chart's Dasha timeline in the local dashboard, open `http://localhost:3000/dashboard?chartId=CHART_ID`, replacing `CHART_ID` with the `chart_id` returned by `POST /api/chart/calculate`. For a deployed frontend, configure `NEXT_PUBLIC_ASTROLOGY_API_URL` to the API's base URL.
 
 ### Request
